@@ -1,0 +1,30 @@
+/* Style for the navigation bar container */
+.Navbar {
+    background-color: #333; /* Dark background color */
+    overflow: hidden; /* Ensures the content is contained within the navigation bar */
+    display: flex; /* Aligns the links horizontally */
+    justify-content: space-around; /* Evenly spaces out the links */
+    padding: 10px 0; /* Padding on top and bottom */
+}
+
+/* General style for all links */
+.Navbar a {
+    color: white; /* Text color */
+    padding: 14px 16px; /* Padding inside each link */
+    text-decoration: none; /* Removes underline from links */
+    font-size: 17px; /* Font size */
+    display: block; /* Makes each link fill its container */
+    text-align: center; /* Center the text inside links */
+}
+
+/* Changes the color of links on hover */
+.Navbar a:hover {
+    background-color: #ddd; /* Light background on hover */
+    color: black; /* Text color change on hover */
+}
+
+/* Style for the active/current page link */
+.Navbar a.active {
+    background-color: #04AA6D; /* Different background color for the active link */
+    color: white;
+}
