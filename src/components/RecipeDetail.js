@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
@@ -12,15 +12,15 @@ function RecipeDetail() {
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
                 categoryName: "food",
-                fieldNames: ["id", "title", "ingredients", "instructions"],
+                fieldNames: ["id", "title", "ingredients", "instructions","image"],
                 conditionField: "id",
                 conditionValue: recipeId,
-                pageNo: 1,
-                pageSize: 5
+                pageNo: "1",
+                pageSize: "1"
             })
         };
 
-        fetch('http://localhost:8080/query/content/single-condition', requestOptions)
+        fetch(process.env.REACT_APP_API_URL+'/query/content/single-condition', requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log('API Data:', data);
@@ -35,14 +35,21 @@ function RecipeDetail() {
     let ingredientsList = [];
     try {
         // Replace single quotes with double quotes and parse
-        ingredientsList = JSON.parse(recipe[0].ingredients.replace(/'/g, '"'));
+        ingredientsList = recipe[0].ingredients
+            .slice(2, -2)
+            .split("', '")
+            .map(item => {
+                return item.replace(/^'(.+)'$/, "$1");
+            });
     } catch (error) {
         console.error("Error parsing ingredients:", error);
     }
 
+    const imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
     return (
         <div>
             <h2>{recipe[0].title}</h2>
+            <img src={imageUrl} alt={recipe.title} />
             <h4>Ingredients:</h4>
             {ingredientsList.length > 0 ? (
                 <ul>
