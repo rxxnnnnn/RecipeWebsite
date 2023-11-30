@@ -1,6 +1,6 @@
 # Recipe Website
-A React website for viewing recipes and getting recommendations. \
-This website uses the services provided by https://github.com/4156-project/WhatToEatToday. \
+A React Application for viewing recipes and getting recommendations. \
+This application uses the services provided by https://github.com/4156-project/WhatToEatToday. \
 APIs used: \
 /recommend/item \
 /recommend/user \
@@ -8,7 +8,7 @@ APIs used: \
 /user/verify \
 /query/category/list/info \
 /query/content/
-/query/content/single-condition \
+/query/content/single-condition 
 
 ## Getting Started
 
@@ -29,17 +29,20 @@ A step by step series of examples that tell you how to get a development environ
 
    ```sh
    git clone https://github.com/rxxnnnnn/RecipeWebsite/
-
+   ```
 2. **Install Dependencies** \
    Inside the project directory, install the necessary packages:
     ```sh
     npm install
+   ```
 3. **Start the Development Server** \
    To run the application in development mode:
     ```sh
     npm start
-4. **Building for Production** \
+   ```
+### Building for Production
    To build the app for production to the build folder:
-    ```sh
-    npm run build
-
+   ```sh
+   npm run build
+   ```
+   This correctly bundles React in production mode and optimizes the build for the best performance.
