@@ -38,3 +38,8 @@ A step by step series of examples that tell you how to get a development environ
    To run the application in development mode:
     ```sh
     npm start
+4. **Building for Production** \
+   To build the app for production to the build folder:
+    ```sh
+    npm run build
+
