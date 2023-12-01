@@ -47,6 +47,7 @@ A step by step series of examples that tell you how to get a development environ
     npm install
    ```
 3. **Start the Development Server** \
+   Make sure https://whattoeattoday-k6jwzq4mja-uc.a.run.app is running on the cloud. \
    To run the application in development mode:
     ```sh
     npm start
