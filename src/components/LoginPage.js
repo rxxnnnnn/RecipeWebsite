@@ -9,27 +9,33 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const { updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
-    if (!user) {
+    const { user, setUser } = useContext(AuthContext);
+    console.log(user);
+    if (!user.id) {
         const handleLogin = async (e) => {
             e.preventDefault();
             try {
                 const response = await axios.post(
-                    process.env.REACT_APP_API_URL + '/user/verify', {
+                    process.env.REACT_APP_API_URL + '/user/login', {
                         username,
-                        password,
-                        category: "food"
+                        password
                     }
                 );
-                if (response.data.success) {
-                    updateUser(username);
+                if (response.data.success && response.data.data.category === "food") {
+                    const id = response.data.data.id
+                    updateUser({id, username, password});
                     navigate(`/user/${username}`);
-                } else {
+                } else if (response.data.success) {
                     console.error("Login failed");
+                    setUsername('');
+                    setPassword('');
+                    navigate(`/login`);
                 }
             } catch (error) {
                 console.error("Login failed:", error);
-                // Handle login error (show message to user)
+                setUsername('');
+                setPassword('');
+                navigate(`/login`);
             }
         };
 
@@ -57,7 +63,7 @@ const LoginPage = () => {
         );
     } else {
         const handleLogout = () => {
-            updateUser(null);
+            updateUser({id:null,username:null,password:null});
             navigate('/login');
         };
         return (

@@ -11,7 +11,7 @@ export const Navbar = () => {
             <Link to='/search'> SEARCH </Link>
             <Link to="/login">LOGIN</Link>
             <Link to="/register">REGISTER</Link>
-            <Link to={`/user/${user}`}>USER</Link>
+            <Link to={`/user/${user.username}`}>USER</Link>
         </div>
     )
 }

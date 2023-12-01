@@ -1,23 +1,17 @@
 // AuthContext.js
 import React, { createContext, useState } from 'react';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-/*
-    useEffect(() => {
-        // Initialize authentication state (e.g., check local storage)
-        // This can be replaced with logic to check if the user is logged in
-        const storedUser = localStorage.getItem('user');
-        if (storedUser && storedUser !== 'null' ) {
-            setUser(storedUser);
-        }
-    }, []);
-*/
+    const [user, setUser] = useState({
+        id: null,
+        username: null,
+        password: null
+    });
     // Function to update the user state, e.g., during login or logout
-    const updateUser = (newUser) => {
-        setUser(newUser);
+    const updateUser = ({ id, username, password }) => {
+        setUser({ id, username, password });
     };
 
     return (

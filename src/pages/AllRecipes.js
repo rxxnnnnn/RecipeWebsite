@@ -60,7 +60,7 @@ function AllRecipes() {
         <div>
             {recipes.length > 0 ? (
                 recipes.map((recipe, index) => (
-                    <RecipeListItem key={index} recipe={recipe} />
+                    <RecipeListItem key={index} recipeId={recipe.id} />
                 ))
             ) : (
                 <p>Loading...</p>

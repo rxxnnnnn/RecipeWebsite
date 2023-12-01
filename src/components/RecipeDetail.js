@@ -31,7 +31,7 @@ function RecipeDetail() {
             .catch(error => console.error(error));
     }, [recipeId]);
 
-    if (!recipe) return <p>Loading...</p>;
+    if (!recipe) return <p>Invalid Content ID</p>;
     let ingredientsList = [];
     try {
         // Replace single quotes with double quotes and parse
