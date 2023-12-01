@@ -9,7 +9,7 @@ export const Navbar = () => {
             <Link to="/"> HOME </Link>
             <Link to='/all'> RECIPES </Link>
             <Link to='/search'> SEARCH </Link>
-            <Link to="/login">LOGIN</Link>
+            <Link to="/login">LOG IN / LOG OUT</Link>
             <Link to="/register">REGISTER</Link>
             <Link to={`/user/${user.username}`}>USER</Link>
         </div>
