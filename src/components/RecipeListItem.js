@@ -30,7 +30,7 @@ function RecipeListItem({ recipeId }) {
             .catch(error => console.error(error));
     }, [recipeId]);
 
-    if (!recipe) return <p>Invalid Content ID</p>;
+    if (!recipe) return <p>Loading</p>;
 
     const imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
     return (

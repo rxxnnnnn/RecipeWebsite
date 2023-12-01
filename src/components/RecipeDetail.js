@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import RecipeListItem from "./RecipeListItem";
 
 function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
     const { id } = useParams();
     const recipeId = parseInt(id)
+    const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const requestOptions = {
@@ -31,7 +34,7 @@ function RecipeDetail() {
             .catch(error => console.error(error));
     }, [recipeId]);
 
-    if (!recipe) return <p>Invalid Content ID</p>;
+    if (!recipe) return <p>Loading...</p>;
     let ingredientsList = [];
     try {
         // Replace single quotes with double quotes and parse
@@ -45,6 +48,31 @@ function RecipeDetail() {
         console.error("Error parsing ingredients:", error);
     }
 
+    const fetchRecommendations = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(process.env.REACT_APP_API_URL+'/recommend/item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "categoryName": "food",
+                    "fieldNameList": ["ingredients"],
+                    "targetId": recipeId.toString(),
+                    "rankTopSize": 10
+                }),
+            });
+
+            const data = await response.json();
+            if (data && data.success) {
+                setRecommendedRecipes(data.data); // Assuming the API returns an array of recipe IDs
+            }
+        } catch (error) {
+            console.error('Error fetching recommendations:', error);
+        }
+        setIsLoading(false);
+    };
     const imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
     return (
         <div>
@@ -62,6 +90,15 @@ function RecipeDetail() {
             )}
             <h4>Instructions:</h4>
             <p>{recipe[0].instructions}</p>
+            <button onClick={fetchRecommendations}>Get Similar Recipes</button>
+            {isLoading && <p>Loading...</p>}
+            {!isLoading && recommendedRecipes && recommendedRecipes.length > 0 ? (
+                recommendedRecipes.map((recipeID, index) => (
+                    <RecipeListItem key={index} recipeId={Number(recipeID)} />
+                ))
+            ) : (
+                <p></p>
+            )}
         </div>
     );
 }
