@@ -1,7 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import {useParams} from "react-router-dom";
-import axios from "axios";
 import RecipeListItem from "./RecipeListItem";
 
 const UserInfo = () => {

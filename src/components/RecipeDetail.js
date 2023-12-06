@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import RecipeListItem from "./RecipeListItem";
+import { AuthContext } from '../contexts/AuthContext';
 
 function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
@@ -8,6 +9,8 @@ function RecipeDetail() {
     const recipeId = parseInt(id)
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useContext(AuthContext);
+    const [inCollection, setInCollection] = useState(false)
 
     useEffect(() => {
         const requestOptions = {
@@ -33,6 +36,31 @@ function RecipeDetail() {
             })
             .catch(error => console.error(error));
     }, [recipeId]);
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username: user.username,
+                password: user.password
+            })
+        };
+
+        fetch(process.env.REACT_APP_API_URL+'/user/login', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log('API Data:', data);
+                if (data && data.success && data.data.category === "food" && data.data.collection) {
+                    console.log(data.data.collection);
+                    if (data.data.collection.includes(recipeId)) {
+                        setInCollection(true);
+                    }
+                }
+            })
+            .catch(error => console.error(error));
+    }, [user, recipeId]);
+
 
     if (!recipe) return <p>Loading...</p>;
     let ingredientsList = [];
@@ -73,10 +101,63 @@ function RecipeDetail() {
         }
         setIsLoading(false);
     };
+
+    const handleAddCollection = async() => {
+        try {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/user/add/collection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": user.username,
+                    "password": user.password,
+                    "category": "food",
+                    "itemId": recipeId
+                }),
+            });
+            const data = await response.json();
+            if (data && data.success) {
+                // Set inCollection to true after successfully adding to collection
+                setInCollection(true);
+            }
+        } catch (error) {
+            console.error('Error adding to collection', error);
+        }
+    }
+
+    const handleRemoveCollection = async() => {
+        try {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/user/delete/collection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": user.username,
+                    "password": user.password,
+                    "category": "food",
+                    "itemId": recipeId
+                }),
+            });
+            const data = await response.json();
+            if (data && data.success) {
+                // Set inCollection to false after successfully adding to collection
+                setInCollection(false);
+            }
+        } catch (error) {
+            console.error('Error removing from collection', error);
+        }
+    }
+
     const imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
     return (
         <div>
             <h2>{recipe[0].title}</h2>
+            {user.id && !inCollection && <button onClick={handleAddCollection}>Add to Collection</button>}
+            {user.id && inCollection && <button onClick={handleRemoveCollection}>Remove from Collection</button>}
+            <br />
+            <br />
             <img src={imageUrl} alt={recipe.title} />
             <h4>Ingredients:</h4>
             {ingredientsList.length > 0 ? (
@@ -91,6 +172,7 @@ function RecipeDetail() {
             <h4>Instructions:</h4>
             <p>{recipe[0].instructions}</p>
             <button onClick={fetchRecommendations}>Get Similar Recipes</button>
+            <br />
             {isLoading && <p>Loading...</p>}
             {!isLoading && recommendedRecipes && recommendedRecipes.length > 0 ? (
                 recommendedRecipes.map((recipeID, index) => (

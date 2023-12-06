@@ -9,8 +9,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const { updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { user, setUser } = useContext(AuthContext);
-    console.log(user);
+    const { user } = useContext(AuthContext);
     if (!user.id) {
         const handleLogin = async (e) => {
             e.preventDefault();

@@ -1,6 +1,6 @@
 // RecipeListItem.jsx
 import React, {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom'; // Assuming you are using React Router for navigation
+import {Link} from 'react-router-dom';
 
 function RecipeListItem({ recipeId }) {
     const [recipe, setRecipe] = useState(null);
