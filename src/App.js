@@ -5,6 +5,7 @@ import UserInfo from './components/UserInfo';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Home from "./pages/Home";
+import Search from "./pages/Search";
 import AllRecipes from "./pages/AllRecipes";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/user/:username" element={<UserInfo />} />
                     <Route path="/login" exact element={<LoginPage />} />
                     <Route path="/register" exact element={<RegisterPage />} />
+                    <Route path="/search" exact element={<Search />} />
                 </Routes>
             </AuthProvider>
         </Router>
