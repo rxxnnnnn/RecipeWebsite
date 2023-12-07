@@ -52,7 +52,6 @@ function RecipeDetail() {
             .then(data => {
                 console.log('API Data:', data);
                 if (data && data.success && data.data.category === "food" && data.data.collection) {
-                    console.log(data.data.collection);
                     if (data.data.collection.includes(recipeId)) {
                         setInCollection(true);
                     }
@@ -61,19 +60,30 @@ function RecipeDetail() {
             .catch(error => console.error(error));
     }, [user, recipeId]);
 
-
+    if (!user.id) {
+        return <div>Login to View</div>
+    }
     if (!recipe) return <p>Loading...</p>;
+    let ingredients = recipe[0].ingredients;
     let ingredientsList = [];
-    try {
-        // Replace single quotes with double quotes and parse
-        ingredientsList = recipe[0].ingredients
-            .slice(2, -2)
-            .split("', '")
-            .map(item => {
-                return item.replace(/^'(.+)'$/, "$1");
-            });
-    } catch (error) {
-        console.error("Error parsing ingredients:", error);
+    if (ingredients) {
+        try {
+            // Replace single quotes with double quotes and parse
+            ingredients = recipe[0].ingredients;
+            if (ingredients.length > 0 && ingredients[0] === '[') {
+                ingredients = ingredients.slice(1);
+            }
+            if (ingredients.length > 0 && ingredients[ingredients.length - 1] === ']') {
+                ingredients = ingredients.slice(0, -1);
+            }
+            ingredientsList = ingredients
+                .split(",")
+                .map(item => {
+                    return item.trim().replace(/^"|"$|^'|'$/g, '').trim();
+                });
+        } catch (error) {
+            console.error("Error parsing ingredients:", error);
+        }
     }
 
     const fetchRecommendations = async () => {
@@ -150,7 +160,10 @@ function RecipeDetail() {
         }
     }
 
-    const imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
+    let imageUrl = ''
+    if (recipe[0].image !== '') {
+        imageUrl = process.env.PUBLIC_URL + '/FoodImages/' + recipe[0].image + '.jpg';
+    }
     return (
         <div>
             <h2>{recipe[0].title}</h2>
@@ -158,7 +171,7 @@ function RecipeDetail() {
             {user.id && inCollection && <button onClick={handleRemoveCollection}>Remove from Collection</button>}
             <br />
             <br />
-            <img src={imageUrl} alt={recipe.title} />
+            {imageUrl && <img src={imageUrl} alt={recipe.title} />}
             <h4>Ingredients:</h4>
             {ingredientsList.length > 0 ? (
                 <ul>

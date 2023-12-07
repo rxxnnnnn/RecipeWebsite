@@ -1,12 +1,13 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import RecipeDetail from "./components/RecipeDetail";
-import UserInfo from './components/UserInfo';
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
+import UserInfo from './pages/UserInfo';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import AllRecipes from "./pages/AllRecipes";
+import Upload from "./pages/Upload"
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 function App() {
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/login" exact element={<LoginPage />} />
                     <Route path="/register" exact element={<RegisterPage />} />
                     <Route path="/search" exact element={<Search />} />
+                    <Route path="/upload" exact element={<Upload />} />
                 </Routes>
             </AuthProvider>
         </Router>

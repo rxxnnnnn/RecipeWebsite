@@ -10,6 +10,7 @@ const LoginPage = () => {
     const { updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+    const [isFailed, setIsFailed] = useState(false);
     if (!user.id) {
         const handleLogin = async (e) => {
             e.preventDefault();
@@ -24,33 +25,49 @@ const LoginPage = () => {
                     const id = response.data.data.id
                     updateUser({id, username, password});
                     navigate(`/user/${username}`);
-                } else if (response.data.success) {
+                } else {
+                    setIsFailed(true);
                     console.error("Login failed");
-                    setUsername('');
-                    setPassword('');
-                    navigate(`/login`);
                 }
             } catch (error) {
+                setIsFailed(true);
                 console.error("Login failed:", error);
-                setUsername('');
-                setPassword('');
-                navigate(`/login`);
             }
         };
+
+        const handleFail = () => {
+            setIsFailed(false);
+            setUsername('');
+            setPassword('');
+            navigate('/login');
+        };
+
+        if (isFailed) {
+            return (
+                <div>
+                    <p>login failed :(</p>
+                    <button onClick={handleFail}>Try Again</button>
+                </div>
+            );
+        }
 
         return (
             <div>
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
+                    <label htmlFor="username">Username</label>
                     <input
                         type="text"
+                        id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
                         required
                     />
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
+                        id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"

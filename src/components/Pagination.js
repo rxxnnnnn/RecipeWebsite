@@ -4,7 +4,6 @@ const PaginationComponent = ({ currentPage, totalItems, itemsPerPage, onPageChan
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const maxPageNumbersToShow = 5; // Adjust as needed
     currentPage = Number(currentPage) || 1;
-    console.log('Current Page in PaginationComponent:', currentPage);
     const getPageNumbers = () => {
         let start = Math.max(1, currentPage - 2);
         let end = Math.min(start + maxPageNumbersToShow - 1, totalPages);
@@ -20,7 +19,6 @@ const PaginationComponent = ({ currentPage, totalItems, itemsPerPage, onPageChan
 
         return pageNumbers;
     };
-    console.log("Page Numbers:", getPageNumbers());
     const handlePageClick = (pageNumber) => {
         onPageChange(Number(pageNumber));
     };

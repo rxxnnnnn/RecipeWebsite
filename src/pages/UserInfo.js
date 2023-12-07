@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import {useParams} from "react-router-dom";
-import RecipeListItem from "./RecipeListItem";
+import RecipeListItem from "../components/RecipeListItem";
 
 const UserInfo = () => {
     const { user } = useContext(AuthContext); // Assuming user info is stored in AuthContext
