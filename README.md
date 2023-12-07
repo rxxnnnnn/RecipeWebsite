@@ -62,12 +62,12 @@ A step by step series of examples that tell you how to get a development environ
    ```
 ### Manual Test Guide
 
-#### 1. user registration
+#### 1. User Registration
    Click **REGISTER** in the navigator bar -> enter Username, Password, and Email -> Click **Register** button
    - If successful, get a message "**{username} is successfully registered!!**". Click **Continue Registering** to go back to REGISTER page. Click **Login** to go to the LOGIN page.
    - If unsuccessful(ex: enter username rx, which is already registered), get a message "**User already exists!**". Choose to **Go Back to Register** or **Login**.
 
-#### 2. user login
+#### 2. User Login
    Click **LOGIN** in the navigator bar
    - if no user logged in, 
      - click each button in the navigator bar to check user can not get access to the content
@@ -76,7 +76,7 @@ A step by step series of examples that tell you how to get a development environ
        - If unsuccessful, get a message "**login failed :(**". Click **Try Again** to go back to **Login** page.
    - if there is a user already logged in, there is a message "**Already logged in**" and a button to **Log Out**.
 
-#### 3. user page
+#### 3. User Page
 Click **USER** in the navigator bar.
    - Click "**Get Some Recommendations!**" button to get 10 recipe recommendations according to the collections (takes about 2 minutes).
    - Can view your collections. If no collection, there is a message "**No Collection. Go to explore more!**"
