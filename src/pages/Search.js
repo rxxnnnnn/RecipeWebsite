@@ -82,7 +82,7 @@ function Search() {
                     <RecipeListItem key={index} recipeId={recipe.id} />
                 ))
             )}
-            <h1>Search by title</h1>
+            <h1>Search by name</h1>
             <form onSubmit={handleTitleSearch}>
                 <label htmlFor="title">Recipe Name</label>
                 <input
