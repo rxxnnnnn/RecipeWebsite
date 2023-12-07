@@ -59,28 +59,33 @@ const RegisterPage = () => {
         <div>
             <h2>Register</h2>
             <form onSubmit={handleRegister}>
+                <label htmlFor="username">Username</label>
                 <input
                     type="text"
+                    id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
                     required
                 />
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
+                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
                 />
+                <label htmlFor="email">Email</label>
                 <input
                     type="email"
+                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     required
                 />
-                {/* Include additional fields as necessary */}
                 <button type="submit">Register</button>
             </form>
         </div>
