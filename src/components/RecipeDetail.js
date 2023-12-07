@@ -13,6 +13,7 @@ function RecipeDetail() {
     const [inCollection, setInCollection] = useState(false)
 
     useEffect(() => {
+        setRecommendedRecipes([]);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -59,6 +60,7 @@ function RecipeDetail() {
             })
             .catch(error => console.error(error));
     }, [user, recipeId]);
+
 
     if (!user.id) {
         return <div>Login to View</div>
