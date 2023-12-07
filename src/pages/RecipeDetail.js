@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import RecipeListItem from "./RecipeListItem";
+import RecipeListItem from "../components/RecipeListItem";
 import { AuthContext } from '../contexts/AuthContext';
 
 function RecipeDetail() {

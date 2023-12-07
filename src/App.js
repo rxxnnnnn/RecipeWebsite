@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
-import RecipeDetail from "./components/RecipeDetail";
+import RecipeDetail from "./pages/RecipeDetail";
 import UserInfo from './pages/UserInfo';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
