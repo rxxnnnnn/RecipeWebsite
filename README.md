@@ -1,6 +1,6 @@
-# Recipe Website
+# Recipe Web Application
 ## Introduction
-A React Application for viewing recipes and getting recommendations. 
+A React Web Application for viewing recipes, searching recipes and getting recommendations. 
 
 Functionalities: 
 - user registration
@@ -27,7 +27,9 @@ APIs used:
 - /recommend/item - find similar recipes of a recipe
 - /recommend/user - provide recipe recommendations given a user's collection of recipes
 
-This application enhances user engagement and experience by offering personalized recipe recommendations based on individual interactions and collections. It caters to a diverse audience, from students, health care workers, engineers, parents to professional cook, appealing to anyone interested in cooking and seeking culinary inspiration. With its comprehensive functionalities, the application serves as a valuable resource for those who enjoy preparing their own meals and exploring new cooking ideas.
+This application enhances user engagement and experience by offering personalized recipe recommendations based on individual interactions and collections. It caters to a diverse audience, from students and health care workers to engineers, parents, and professional cooks, appealing to anyone interested in cooking and seeking culinary inspiration.
+The application features a robust search functionality, allowing users to effortlessly find recipes using specific keywords. This ensures a smooth and intuitive experience for those looking to quickly locate dishes based on ingredients, cuisine types, or dietary preferences. 
+Also, the application empowers culinary enthusiasts to contribute to the community by uploading their own recipes. This feature encourages a collaborative environment where users can share their unique culinary creations, exchange cooking tips, and broaden their gastronomic horizons. With its comprehensive functionalities, the application serves as an invaluable resource for those who enjoy preparing their own meals and exploring new cooking ideas.
 
 ## How to Build, Test, and Run
 
