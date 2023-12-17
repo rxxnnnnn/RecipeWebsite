@@ -8,6 +8,7 @@ const UserInfo = () => {
     const { username } = useParams();
     const [collections, setCollections] = useState([]);
     const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+    const [recommendedRecipesCollection, setRecommendedRecipesCollection] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -33,6 +34,13 @@ const UserInfo = () => {
                 .catch(error => console.error(error));
         }
     }, [user.id && user.username === username]);
+
+    useEffect(() => {
+        // Check if the recommendedRecipesCollection is empty and isLoading is false
+        if (isLoading && (!recommendedRecipesCollection || recommendedRecipesCollection.length === 0)) {
+            fetchRecommendations();
+        }
+    }, [recommendedRecipesCollection, isLoading]);
 
     if (!user.id || user.username !== username) {
         return <p>Please log in to view user information.</p>;
@@ -63,17 +71,54 @@ const UserInfo = () => {
         setIsLoading(false);
     };
 
+
+
+    const fetchRecommendationsCollection = async () => {
+        try {
+            const response = await fetch(process.env.REACT_APP_API_URL+'/recommend/similar-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": user.username,
+                    "password": user.password,
+                    "category": "food",
+                    "rankTopSize": 10
+                }),
+            });
+
+            const data = await response.json();
+            if (data && data.success) {
+                setRecommendedRecipesCollection(data.data); // Assuming the API returns an array of recipe IDs
+            }
+        } catch (error) {
+            console.error('Error fetching recommendations:', error);
+        }
+        if (!recommendedRecipesCollection ||recommendedRecipesCollection.length === 0) {
+            setIsLoading(true);
+        } else {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div>
             <h2>Hi {user.username} !</h2>
-            <button onClick={fetchRecommendations}>Get Some Recommendations!</button>
-            {isLoading && <p>Loading...</p>}
-            {!isLoading && recommendedRecipes && recommendedRecipes.length > 0 ? (
-                recommendedRecipes.map((recipeID, index) => (
-                    <RecipeListItem key={index} recipeId={Number(recipeID)} />
-                ))
+            <button onClick={fetchRecommendationsCollection}>Get Some Recommendations!</button>
+            {recommendedRecipesCollection && recommendedRecipesCollection.length > 0 ? (
+                    recommendedRecipesCollection.map((recipeID, index) => (
+                        <RecipeListItem key={index} recipeId={Number(recipeID)} />
+                    ))
             ) : (
-                <p></p>
+                <>
+                    {isLoading && <p>No Similar User. Recommendation is Loading...</p>}
+                    {!isLoading && recommendedRecipes && recommendedRecipes.length > 0 && (
+                        recommendedRecipes.map((recipeID, index) => (
+                            <RecipeListItem key={index} recipeId={Number(recipeID)} />
+                        ))
+                    )}
+                </>
             )}
             <h3>Collection:</h3>
             {collections.length > 0 ? (

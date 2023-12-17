@@ -22,6 +22,8 @@ function Search() {
                 },
                 body: JSON.stringify({
                     "categoryName": "food",
+                    "pageNo":"1",
+                    "pageSize":"10",
                     keyword
                 }),
             });
